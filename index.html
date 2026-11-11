@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Plan webinars and track professional development units for your PMP renewal.">
+  <title>PMP renewal tracker</title>
+  <link rel="stylesheet" href="tracker.css">
+  <script src="tracker.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to tracker</a>
+  <header class="masthead">
+    <div class="wrap masthead-inner">
+      <a class="brand" href="https://techwithtam.com">Tech With Tam</a>
+      <a class="external" href="https://ccrs.pmi.org/" target="_blank" rel="noreferrer">Open PMI CCRS <span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+  <main id="main" class="wrap">
+    <header class="intro">
+      <h1>PMP renewal tracker</h1>
+      <p>Plan webinars for your work and track which professional development units (PDUs) PMI has posted.</p>
+    </header>
+
+    <p id="storage-error" class="message error" role="alert" hidden></p>
+    <noscript><p class="message error">Enable JavaScript to use the tracker.</p></noscript>
+
+    <details id="cycle-panel" class="panel cycle" open>
+      <summary><span>Renewal cycle</span><span id="cycle-range"></span></summary>
+      <form id="cycle-form">
+        <p>Copy your cycle dates and posted balances from PMI's Continuing Certification Renewal System (CCRS). Include only credits you aren't tracking as individual activities below.</p>
+        <div class="fields dates">
+          <label>Cycle start<input name="start" type="date" required></label>
+          <label>Renewal date<input name="end" type="date" required></label>
+        </div>
+        <fieldset>
+          <legend>Posted PDUs from other activities</legend>
+          <div class="fields credits">
+            <label>Ways of Working<input name="waysOfWorking" type="number" min="0" max="999" step="0.01" value="0" required></label>
+            <label>Power Skills<input name="powerSkills" type="number" min="0" max="999" step="0.01" value="0" required></label>
+            <label>Business Acumen<input name="businessAcumen" type="number" min="0" max="999" step="0.01" value="0" required></label>
+            <label>Giving Back<input name="givingBack" type="number" min="0" max="25" step="0.01" value="0" required></label>
+          </div>
+        </fieldset>
+        <p id="cycle-error" class="error" role="alert" hidden></p>
+        <button class="primary">Save cycle</button>
+      </form>
+    </details>
+
+    <section class="panel progress" aria-labelledby="progress-title" id="progress" hidden>
+      <div class="section-head">
+        <div>
+          <h2 id="progress-title">Renewal progress</h2>
+          <p>Only credits you confirm in CCRS count toward these requirements.</p>
+        </div>
+      </div>
+      <table>
+        <thead><tr><th scope="col">Requirement</th><th scope="col">Posted</th><th scope="col">Target</th><th scope="col">Still needed</th></tr></thead>
+        <tbody id="progress-rows"></tbody>
+      </table>
+      <p class="progress-note" id="progress-note"></p>
+    </section>
+
+    <section class="panel watchlist" aria-labelledby="watchlist-title">
+      <div class="section-head">
+        <div>
+          <h2 id="watchlist-title">Webinar watchlist</h2>
+          <p id="watchlist-help">Save your renewal dates to start adding activities.</p>
+        </div>
+        <div class="actions">
+          <button id="add-activity" class="primary" type="button" disabled>Add activity</button>
+          <button id="import-plan" type="button" disabled>Import watchlist</button>
+          <input id="watchlist-file" type="file" accept=".json,application/json" hidden>
+        </div>
+      </div>
+      <div id="watchlist-controls" class="filter-row" hidden>
+        <label>Filter by status
+          <select id="status-filter">
+            <option value="all">All activities</option>
+            <option value="planned">Planned</option>
+            <option value="completed">Completed, awaiting PMI</option>
+            <option value="posted">Posted to PMI</option>
+          </select>
+        </label>
+      </div>
+      <p id="empty-watchlist" class="empty" hidden></p>
+      <ul id="activities" class="activity-list"></ul>
+    </section>
+
+    <section class="backup" aria-labelledby="backup-title">
+      <div>
+        <h2 id="backup-title">Back up your tracker</h2>
+        <p>Your records are saved in this browser. Download a backup before moving the tracker folder, changing browsers, clearing browser data, or starting your next cycle.</p>
+      </div>
+      <div class="actions">
+        <button id="download-backup" type="button" disabled>Download backup</button>
+        <button id="restore-backup" type="button">Restore backup</button>
+        <button id="new-cycle" type="button" disabled>Start new cycle</button>
+        <input id="backup-file" type="file" accept=".json,application/json" hidden>
+      </div>
+    </section>
+    <p class="message" id="notice" role="status" hidden></p>
+    <p class="message error" id="action-error" role="alert" hidden></p>
+  </main>
+
+  <dialog id="activity-dialog" aria-labelledby="activity-heading">
+    <form id="activity-form">
+      <h2 id="activity-heading">Add activity</h2>
+      <div class="fields dates">
+        <label>Activity title<input name="title" required maxlength="300"></label>
+        <label>Source link <span class="optional">(optional)</span><input name="url" type="url" maxlength="2000" placeholder="https://"></label>
+      </div>
+      <fieldset>
+        <legend>Education PDUs from the provider</legend>
+        <div class="fields credits">
+          <label>Ways of Working<input name="waysOfWorking" type="number" min="0" max="999" step="0.01" value="0" required></label>
+          <label>Power Skills<input name="powerSkills" type="number" min="0" max="999" step="0.01" value="0" required></label>
+          <label>Business Acumen<input name="businessAcumen" type="number" min="0" max="999" step="0.01" value="0" required></label>
+        </div>
+      </fieldset>
+      <div class="fields activity-dates">
+        <label>Planned completion date<input name="plannedDate" type="date"></label>
+        <label>Completed date<input name="completedDate" type="date"></label>
+        <label>Posted date in CCRS<input name="postedDate" type="date"></label>
+      </div>
+      <p class="field-hint">Adding a posted date includes these PDUs in your renewal totals.</p>
+      <label>How you'll use it <span class="optional">(optional)</span><textarea name="application" maxlength="500" rows="2"></textarea></label>
+      <label>Notes <span class="optional">(optional)</span><textarea name="notes" maxlength="5000" rows="3"></textarea></label>
+      <p id="activity-error" class="error" role="alert" hidden></p>
+      <div class="dialog-actions">
+        <button id="remove-activity" class="danger" type="button" hidden>Remove activity</button>
+        <div class="actions">
+          <button id="cancel-activity" type="button">Cancel</button>
+          <button class="primary">Save activity</button>
+        </div>
+      </div>
+    </form>
+  </dialog>
+
+  <template id="activity-template">
+    <li class="activity">
+      <div>
+        <h3></h3>
+        <p class="activity-meta"></p>
+        <p class="application" hidden></p>
+        <a class="source-link" target="_blank" rel="noreferrer" hidden>Open source <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="activity-actions">
+        <span class="activity-status"></span>
+        <button type="button">Edit</button>
+      </div>
+    </li>
+  </template>
+</body>
+</html>

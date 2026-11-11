@@ -1,0 +1,21 @@
+{
+  "format": "pmp-watchlist-v1",
+  "activities": [
+    {
+      "title": "Reducing supplier handoff delays",
+      "url": "https://example.com/webinars/supplier-handoffs",
+      "waysOfWorking": 0.75,
+      "powerSkills": 0.25,
+      "businessAcumen": 0,
+      "application": "Use the handoff checklist to review how new suppliers are onboarded."
+    },
+    {
+      "title": "Making the case for inventory improvements",
+      "url": "https://example.com/webinars/inventory-improvements",
+      "waysOfWorking": 0,
+      "powerSkills": 0,
+      "businessAcumen": 1,
+      "application": "Estimate the cost of stockouts before proposing a change to reorder points."
+    }
+  ]
+}
