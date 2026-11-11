@@ -4,6 +4,14 @@ Plan webinars that apply to your work and track the professional development uni
 
 When I planned my own renewal, I gave AI a description of my consulting work and asked it to look for webinars I could apply to client projects. That gave me a watchlist of 60 sessions. If you're going to spend an hour on a webinar, it helps to know where you could use what you learn.
 
+## Set up with your AI assistant
+
+Copy this request into your AI assistant.
+
+> Help me set up my PMP renewal tracker using https://github.com/techwithtam/pmp-renewal-tracker. Read the README and SKILL.md. Walk me through entering my cycle dates and posted PDUs. Ask about my work and help me find webinars I can use. After I review the list, create `pmp-watchlist.json` and show me where to import it.
+
+An assistant with access to your files can download and unzip the tracker for you. You can also follow the steps below in Chrome.
+
 ## Downloads
 
 - The tracker ZIP contains the app. Unzip it, keep the files together, and open `index.html` in Chrome. [Download pmp-renewal-tracker.zip](https://github.com/techwithtam/pmp-renewal-tracker/releases/latest/download/pmp-renewal-tracker.zip)
